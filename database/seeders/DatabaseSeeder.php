@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,11 +17,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Create Roles
+        $adminRole = Role::firstOrCreate(['name' => 'Administrator', 'guard_name' => 'web']);
+        $staffRole = Role::firstOrCreate(['name' => 'Staff', 'guard_name' => 'web']);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 2. Create Admin User
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Administrator',
+                'password' => Hash::make('konfirmasi'),
+            ]
+        );
+        $admin->syncRoles($adminRole);
+
+        // 3. Create Staff User
+        $staff = User::firstOrCreate(
+            ['email' => 'staf@gmail.com'],
+            [
+                'name' => 'Staff',
+                'password' => Hash::make('konfirmasi'),
+            ]
+        );
+        $staff->syncRoles($staffRole);
     }
 }

@@ -6,5 +6,12 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 class Role extends SpatieRole
 {
-    // Custom attributes, helper methods, or relationships can be defined here
+    protected $fillable = ['name', 'guard_name'];
+
+    public function scopeSearch($query, ?string $search)
+    {
+        return $query->when($search, function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        });
+    }
 }
