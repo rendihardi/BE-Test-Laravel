@@ -26,4 +26,14 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function scopeSearch($query, ?string $search)
+    {
+        return $query->when($search, function ($q) use ($search) {
+            $q->where(function ($sq) use ($search) {
+                $sq->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        });
+    }
 }

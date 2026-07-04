@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Interface\RoleInterface::class,
             \App\Repositories\RoleRepository::class
         );
+        $this->app->bind(
+            \App\Interface\CategoryInterface::class,
+            \App\Repositories\CategoryRepository::class
+        );
+        $this->app->bind(
+            \App\Interface\ProductInterface::class,
+            \App\Repositories\ProductRepository::class
+        );
     }
 
     /**

@@ -15,6 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/roles/paginated', [RoleController::class, 'getAllPaginated']);
     Route::apiResource('/roles', RoleController::class);
 
+
     // CRUD Users - Hanya dapat diakses oleh role "Administrator" setelah login
     Route::middleware('role:Administrator')->group(function () {
         Route::get('/users/paginated', [UserController::class, 'getAllPaginated']);
