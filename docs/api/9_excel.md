@@ -159,12 +159,12 @@ You can download the prepared import templates directly:
 - **CSV Template (.csv):** [/templates/product_import_template.csv](/templates/product_import_template.csv)
 
 #### Example Data Structure
-| Product Name | Product Code | Price | Current Stock | Category Name | Is Active | Attributes |
-|---|---|---|---|---|---|---|
-| Smartphone Wireless Pro | PROD-MPHONE-01 | 12000000 | 50 | Electronics | true | `{"brand":"TechBrand","warranty":"2 years"}` |
-| Ergonomic Office Chair | PROD-CHAIR-02 | 1500000 | 15 | Furniture | true | `{"material":"Mesh","color":"Slate Gray"}` |
-| Organic Green Tea | PROD-TEA-03 | 45000 | 120 | Food & Beverage | true | `{"weight":"250g","organic":true}` |
-| Mechanical Keyboard RGB | PROD-KEYBOARD-04 | 850000 | 0 | Electronics | false | `{"switches":"Red Linear"}` |
+| Product Name | Price | Current Stock | Category Name | Is Active | Attributes |
+|---|---|---|---|---|---|
+| Smartphone Wireless Pro | 12000000 | 50 | Electronics | true | `{"brand":"TechBrand","warranty":"2 years"}` |
+| Ergonomic Office Chair | 1500000 | 15 | Furniture | true | `{"material":"Mesh","color":"Slate Gray"}` |
+| Organic Green Tea | 45000 | 120 | Food & Beverage | true | `{"weight":"250g","organic":true}` |
+| Mechanical Keyboard RGB | 850000 | 0 | Electronics | false | `{"switches":"Red Linear"}` |
 
 ### Response
 #### Success (202 Accepted)
