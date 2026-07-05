@@ -6,6 +6,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -13,6 +15,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/me', [AuthController::class, 'me'])->name('me');
+    Route::get('/dashboard/cards', [DashboardController::class, 'cards']);
+    Route::get('/dashboard/pie-chart', [DashboardController::class, 'pieChart']);
+    Route::get('/dashboard/low-stock', [DashboardController::class, 'lowStock']);
+    Route::get('/dashboard/stock-chart', [DashboardController::class, 'stockChart']);
+    Route::get('/dashboard/recent-transactions', [DashboardController::class, 'recentTransactions']);
 
     // CRUD Roles - Dapat diakses oleh role apa pun setelah login
     Route::get('/roles/paginated', [RoleController::class, 'getAllPaginated']);
@@ -37,5 +44,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:Administrator')->group(function () {
         Route::get('/users/paginated', [UserController::class, 'getAllPaginated']);
         Route::apiResource('/users', UserController::class);
+
+        // Audit Trails
+        Route::get('/audits/users', [AuditController::class, 'userAudits']);
+        Route::get('/audits/roles', [AuditController::class, 'roleAudits']);
+        Route::get('/audits/categories', [AuditController::class, 'categoryAudits']);
+        Route::get('/audits/products', [AuditController::class, 'productAudits']);
     });
 });

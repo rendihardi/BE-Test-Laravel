@@ -46,7 +46,7 @@ class RoleRepository implements RoleInterface
         try {
             $roleData = [
                 'name' => $data['name'],
-                'guard_name' => $data['guard_name'] ?? 'web',
+                'guard_name' => $data['guard_name'] ?? 'sanctum',
             ];
 
             $role = Role::create($roleData);

@@ -20,9 +20,10 @@ return new class extends Migration
 
             $table->uuid('id')->primary();
             $table->string($morphPrefix.'_type')->nullable();
-            $table->unsignedBigInteger($morphPrefix.'_id')->nullable();
+            $table->string($morphPrefix.'_id', 95)->nullable();
             $table->string('event');
-            $table->morphs('auditable');
+            $table->string('auditable_type');
+            $table->string('auditable_id', 95);
             $table->text('old_values')->nullable();
             $table->text('new_values')->nullable();
             $table->text('url')->nullable();
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index([$morphPrefix.'_id', $morphPrefix.'_type']);
+            $table->index(['auditable_id', 'auditable_type']);
         });
     }
 

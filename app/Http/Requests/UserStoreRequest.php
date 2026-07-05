@@ -26,7 +26,18 @@ class UserStoreRequest extends FormRequest
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8',
             'roles' => 'nullable|array',
-            'roles.*' => 'string|exists:roles,name',
+            'roles.*' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $exists = \DB::table('roles')
+                        ->where('id', $value)
+                        ->orWhere('name', $value)
+                        ->exists();
+                    if (!$exists) {
+                        $fail("The selected {$attribute} is invalid.");
+                    }
+                }
+            ],
         ];
     }
 }

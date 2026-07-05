@@ -25,6 +25,7 @@ class User extends Authenticatable implements Auditable
     use HasApiTokens, HasFactory, HasUuids, Notifiable, HasRoles, AuditableTrait;
 
     protected $primaryKey = 'uuid';
+    protected $guard_name = 'sanctum';
 
     /**
      * Get the attributes that should be cast.
