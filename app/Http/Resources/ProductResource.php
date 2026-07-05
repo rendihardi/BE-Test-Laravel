@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'image' => $this->image ? url(Storage::url($this->image)) : null,
             'price' => (float)$this->price,
             'current_stock' => (int)$this->current_stock,
+            'stock_status' => $this->stock_status,
             'attributes' => $this->attributes,
             'specification_pdf' => $this->specification_pdf ? url(Storage::url($this->specification_pdf)) : null,
             'is_active' => (bool)$this->is_active,

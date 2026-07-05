@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Product extends Model
+class Product extends Model implements Auditable
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory, HasUuids, SoftDeletes, AuditableTrait;
 
     protected $fillable = [
         'category_id',
@@ -65,6 +67,15 @@ class Product extends Model
             $q->where('price', '>=', $filters['min_price']);
         })->when(isset($filters['max_price']), function ($q) use ($filters) {
             $q->where('price', '<=', $filters['max_price']);
+        })->when(isset($filters['stock_status']), function ($q) use ($filters) {
+            $status = $filters['stock_status'];
+            if ($status === 'out of stock' || $status === 'out_of_stock') {
+                $q->where('current_stock', 0);
+            } elseif ($status === 'low stock' || $status === 'low_stock') {
+                $q->whereBetween('current_stock', [1, 14]);
+            } elseif ($status === 'in stock' || $status === 'in_stock') {
+                $q->where('current_stock', '>=', 15);
+            }
         });
     }
 
@@ -75,5 +86,16 @@ class Product extends Model
         $order = strtolower($sortOrder) === 'asc' ? 'asc' : 'desc';
 
         return $query->orderBy($sort, $order);
+    }
+
+    public function getStockStatusAttribute(): string
+    {
+        if ($this->current_stock <= 0) {
+            return 'out of stock';
+        }
+        if ($this->current_stock < 15) {
+            return 'low stock';
+        }
+        return 'in stock';
     }
 }

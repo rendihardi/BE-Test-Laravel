@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('stock_transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('product_id')->constrained('products')->onDelete('cascade');
-            $table->enum('transaction_type', ['IN', 'OUT']);
+            $table->string('trx_code', 50)->unique();
+            $table->enum('type', ['IN', 'OUT', 'ADJUSTMTENT']);
             $table->integer('qty');
+            $table->integer('stock_before');
+            $table->integer('stock_after');
             $table->dateTime('transaction_date');
             $table->string('product_name', 150);
             $table->string('image')->nullable();

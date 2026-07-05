@@ -25,8 +25,20 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'search' => 'nullable|string',
+            'limit' => 'nullable|integer|min:1',
+            'category_id' => 'nullable|uuid',
+            'is_active' => 'nullable|string',
+            'min_price' => 'nullable|numeric',
+            'max_price' => 'nullable|numeric',
+            'stock_status' => 'nullable|string|in:in stock,low stock,out of stock,in_stock,low_stock,out_of_stock',
+            'sort_by' => 'nullable|string',
+            'sort_order' => 'nullable|string|in:asc,desc,ASC,DESC',
+        ]);
+
         try {
-            $filters = $request->only(['category_id', 'is_active', 'min_price', 'max_price']);
+            $filters = $request->only(['category_id', 'is_active', 'min_price', 'max_price', 'stock_status']);
             $products = $this->productRepository->getAll(
                 $request->search,
                 $filters,
@@ -51,12 +63,13 @@ class ProductController extends Controller
             'is_active' => 'nullable|string',
             'min_price' => 'nullable|numeric',
             'max_price' => 'nullable|numeric',
+            'stock_status' => 'nullable|string|in:in stock,low stock,out of stock,in_stock,low_stock,out_of_stock',
             'sort_by' => 'nullable|string',
             'sort_order' => 'nullable|string|in:asc,desc,ASC,DESC',
         ]);
 
         try {
-            $filters = $request->only(['category_id', 'is_active', 'min_price', 'max_price']);
+            $filters = $request->only(['category_id', 'is_active', 'min_price', 'max_price', 'stock_status']);
             $products = $this->productRepository->getAllPaginated(
                 $request->search,
                 $filters,

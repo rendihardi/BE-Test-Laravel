@@ -24,6 +24,11 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'search' => 'nullable|string',
+            'limit' => 'nullable|integer|min:1',
+        ]);
+
         try {
             $categories = $this->categoryRepository->getAll(
                 $request->search,

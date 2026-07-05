@@ -24,6 +24,11 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'search' => 'nullable|string',
+            'limit' => 'nullable|integer|min:1',
+        ]);
+
         try {
             $roles = $this->roleRepository->getAll(
                 $request->search,

@@ -14,13 +14,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     /** @use HasFactory<UserFactory> */
-    use HasApiTokens, HasFactory, HasUuids, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, HasUuids, Notifiable, HasRoles, AuditableTrait;
 
     protected $primaryKey = 'uuid';
 
