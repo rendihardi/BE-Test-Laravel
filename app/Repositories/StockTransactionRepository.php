@@ -53,6 +53,7 @@ class StockTransactionRepository implements StockTransactionInterface
     {
         DB::beginTransaction();
         try {
+            /** @var \App\Models\Product|null $product */
             $product = Product::with('category')->lockForUpdate()->find($data['product_id']);
             if (!$product) {
                 throw new \Exception('Product not found.');
@@ -98,9 +99,8 @@ class StockTransactionRepository implements StockTransactionInterface
             ]);
 
             // Update product stock
-            $product->update([
-                'current_stock' => $stockAfter
-            ]);
+            $product->current_stock = $stockAfter;
+            $product->save();
 
             DB::commit();
             return $transaction;
