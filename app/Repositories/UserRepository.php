@@ -33,7 +33,7 @@ class UserRepository implements UserInterface
     ) {
         $query = User::query()->with('roles')->search($search);
 
-        $perPage = $rowPerPage ?? 15;
+        $perPage = $rowPerPage ?? 10;
 
         return $execute ? $query : $query->paginate($perPage);
     }

@@ -40,7 +40,7 @@ class StockTransactionRepository implements StockTransactionInterface
         ?int $rowPerPage
     ) {
         $query = $this->getAll($search, $filters, $sortBy, $sortOrder, null, false);
-        $perPage = $rowPerPage ?? 15;
+        $perPage = $rowPerPage ?? 10;
         return $query->paginate($perPage);
     }
 

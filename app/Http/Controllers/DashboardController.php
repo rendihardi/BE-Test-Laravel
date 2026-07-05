@@ -99,7 +99,7 @@ class DashboardController extends Controller
 
             $transactions = StockTransaction::whereBetween('transaction_date', [$startDate, $endDate])
                 ->whereIn('type', ['IN', 'OUT'])
-                ->selectRaw("DATE_FORMAT(transaction_date, '%Y-%m') as month, type, SUM(quantity) as total_qty")
+                ->selectRaw("DATE_FORMAT(transaction_date, '%Y-%m') as month, type, SUM(qty) as total_qty")
                 ->groupBy('month', 'type')
                 ->orderBy('month', 'asc')
                 ->get();

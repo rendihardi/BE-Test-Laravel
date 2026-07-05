@@ -31,7 +31,7 @@ class CategoryRepository implements CategoryInterface
         ?int $rowPerPage
     ) {
         $query = $this->getAll($search, null, false);
-        $perPage = $rowPerPage ?? 15;
+        $perPage = $rowPerPage ?? 10;
         return $query->paginate($perPage);
     }
 

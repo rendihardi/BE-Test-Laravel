@@ -8,6 +8,7 @@ use App\Http\Controllers\StockTransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -51,4 +52,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/audits/categories', [AuditController::class, 'categoryAudits']);
         Route::get('/audits/products', [AuditController::class, 'productAudits']);
     });
+
+    // Excel Import & Export
+    Route::post('/excel/export/products', [ExcelController::class, 'exportProducts']);
+    Route::post('/excel/export/stock-in', [ExcelController::class, 'exportStockIn']);
+    Route::post('/excel/export/stock-out', [ExcelController::class, 'exportStockOut']);
+    Route::post('/excel/export/adjustments', [ExcelController::class, 'exportAdjustments']);
+    Route::post('/excel/export/stock-transactions', [ExcelController::class, 'exportStockTransactions']);
+    Route::post('/excel/import', [ExcelController::class, 'import']);
+    Route::get('/excel/templates/product', [ExcelController::class, 'downloadProductTemplate']);
+    Route::get('/excel/jobs', [ExcelController::class, 'listJobs']);
+    Route::get('/excel/jobs/{id}', [ExcelController::class, 'showJob']);
 });

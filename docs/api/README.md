@@ -22,6 +22,8 @@ Please select a module below to view its detailed API Contract (HTTP methods, en
    - Summary statistics cards, pie chart distribution data, and low-stock warnings table.
 8. 🕵️ [Audit Trails API Contract](8_audits.md)
    - Admin-only audit logs to track changes in Users, Roles, Categories, and Products.
+9. 📊 [Excel Export & Import API Contract](9_excel.md)
+   - Background queued export/import of products and transaction histories with dynamic field selection.
 
 ---
 

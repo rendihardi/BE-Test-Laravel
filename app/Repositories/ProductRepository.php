@@ -40,7 +40,7 @@ class ProductRepository implements ProductInterface
         ?int $rowPerPage
     ) {
         $query = $this->getAll($search, $filters, $sortBy, $sortOrder, null, false);
-        $perPage = $rowPerPage ?? 15;
+        $perPage = $rowPerPage ?? 10;
         return $query->paginate($perPage);
     }
 
@@ -88,7 +88,7 @@ class ProductRepository implements ProductInterface
             $productData = [];
             $fields = [
                 'category_id', 'product_name', 'image',
-                'price', 'current_stock', 'attributes', 'specification_pdf', 'is_active'
+                'price', 'attributes', 'specification_pdf', 'is_active'
             ];
 
             foreach ($fields as $field) {
