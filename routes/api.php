@@ -22,19 +22,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/stock-chart', [DashboardController::class, 'stockChart']);
     Route::get('/dashboard/recent-transactions', [DashboardController::class, 'recentTransactions']);
 
-    // CRUD Roles - Dapat diakses oleh role apa pun setelah login
+    // CRUD Roles 
     Route::get('/roles/paginated', [RoleController::class, 'getAllPaginated']);
     Route::apiResource('/roles', RoleController::class);
 
-    // CRUD Categories - Dapat diakses oleh role apa pun setelah login
+    // CRUD Categories 
     Route::get('/categories/paginated', [CategoryController::class, 'getAllPaginated']);
     Route::apiResource('/categories', CategoryController::class);
 
-    // CRUD Products - Dapat diakses oleh role apa pun setelah login
+    // CRUD Products 
     Route::get('/products/paginated', [ProductController::class, 'getAllPaginated']);
     Route::apiResource('/products', ProductController::class);
 
-    // Stock Transactions - Dapat diakses oleh role apa pun setelah login
+    // Stock Transactions 
     Route::get('/stock-transactions/paginated', [StockTransactionController::class, 'getAllPaginated']);
     Route::apiResource('/stock-transactions', StockTransactionController::class)->only(['index', 'show', 'store']);
     Route::post('/products/{id}/stock-in', [StockTransactionController::class, 'stockIn']);
@@ -45,13 +45,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('role:Administrator')->group(function () {
         Route::get('/users/paginated', [UserController::class, 'getAllPaginated']);
         Route::apiResource('/users', UserController::class);
-
-        // Audit Trails
-        Route::get('/audits/users', [AuditController::class, 'userAudits']);
-        Route::get('/audits/roles', [AuditController::class, 'roleAudits']);
-        Route::get('/audits/categories', [AuditController::class, 'categoryAudits']);
-        Route::get('/audits/products', [AuditController::class, 'productAudits']);
     });
+
+    // Audit Trails
+    Route::get('/audits/users', [AuditController::class, 'userAudits']);
+    Route::get('/audits/roles', [AuditController::class, 'roleAudits']);
+    Route::get('/audits/categories', [AuditController::class, 'categoryAudits']);
+    Route::get('/audits/products', [AuditController::class, 'productAudits']);
 
     // Excel Import & Export
     Route::post('/excel/export/products', [ExcelController::class, 'exportProducts']);
