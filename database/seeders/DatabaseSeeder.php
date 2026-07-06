@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
         // 3. Create Staff User
         $staff = User::firstOrCreate(
-            ['email' => 'staf@gmail.com'],
+            ['email' => 'staff@gmail.com'],
             [
                 'name' => 'Staff',
                 'password' => Hash::make('konfirmasi'),
