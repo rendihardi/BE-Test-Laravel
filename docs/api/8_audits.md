@@ -51,6 +51,13 @@ Retrieve history logs for changes to User accounts.
                     "uuid": "019f2fcd-af8d-71d7-89cf-9d21ae545122",
                     "name": "Administrator",
                     "email": "admin@gmail.com"
+                },
+                "auditable": {
+                    "uuid": "019f2fce-bb70-7129-9753-afd81f3d304e",
+                    "name": "budianto",
+                    "email": "budi@gmail.com",
+                    "created_at": "2026-07-05T01:05:05.000000Z",
+                    "updated_at": "2026-07-05T01:05:05.000000Z"
                 }
             }
         ],
@@ -107,6 +114,13 @@ Same parameters as **User Audits**. Note that `auditable_id` for role audits wil
                     "uuid": "019f2fcd-af8d-71d7-89cf-9d21ae545122",
                     "name": "Administrator",
                     "email": "admin@gmail.com"
+                },
+                "auditable": {
+                    "id": 3,
+                    "name": "head-warehouse",
+                    "guard_name": "sanctum",
+                    "created_at": "2026-07-05T01:23:43.000000Z",
+                    "updated_at": "2026-07-05T01:23:43.000000Z"
                 }
             }
         ],

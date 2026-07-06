@@ -49,12 +49,14 @@ Retrieve categories and their product counts.
         {
             "category_id": "019f2fce-bb70-7129-9753-afd81f3d304e",
             "category_name": "Electronics",
-            "product_count": 10
+            "product_count": 10,
+            "percentage": 40.00
         },
         {
             "category_id": "019f2fce-cf99-7124-9111-cde81a3d311b",
             "category_name": "Office Stationery",
-            "product_count": 15
+            "product_count": 15,
+            "percentage": 60.00
         }
     ]
 }
@@ -96,8 +98,8 @@ Retrieve up to 5 products with stock less than 15.
 
 ---
 
-## 4. Get Stock Chart (IN vs OUT monthly)
-Retrieve total monthly stock incoming (`IN`) vs outgoing (`OUT`) quantities for the last 12 months.
+## 4. Get Stock Chart (IN vs OUT vs ADJ monthly)
+Retrieve total monthly stock incoming (`IN`), outgoing (`OUT`), and adjustment (`ADJ`) quantities for the last 12 months.
 
 - **Endpoint:** `GET /api/dashboard/stock-chart`
 - **Headers:** 
@@ -116,20 +118,23 @@ Retrieve total monthly stock incoming (`IN`) vs outgoing (`OUT`) quantities for 
             "month": "2025-08",
             "label": "August 2025",
             "stock_in": 120,
-            "stock_out": 85
+            "stock_out": 85,
+            "adj": 5
         },
         {
             "month": "2025-09",
             "label": "September 2025",
             "stock_in": 150,
-            "stock_out": 110
+            "stock_out": 110,
+            "adj": 0
         },
         ...
         {
             "month": "2026-07",
             "label": "July 2026",
             "stock_in": 40,
-            "stock_out": 15
+            "stock_out": 15,
+            "adj": 12
         }
     ]
 }

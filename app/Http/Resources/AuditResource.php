@@ -30,6 +30,37 @@ class AuditResource extends JsonResource
                 'name' => $this->user->name,
                 'email' => $this->user->email,
             ] : null,
+            'target_name' => $this->getTargetName(),
+            'auditable' => $this->auditable,
         ];
+    }
+
+    /**
+     * Get the descriptive name of the auditable target resource.
+     */
+    private function getTargetName(): ?string
+    {
+        if ($this->auditable) {
+            if ($this->auditable instanceof \App\Models\Product) {
+                return $this->auditable->product_name;
+            }
+            return $this->auditable->name ?? null;
+        }
+
+        // Fallback: If auditable is null (hard deleted), extract name from changed values
+        $values = !empty($this->new_values) ? $this->new_values : $this->old_values;
+
+        if (is_string($values)) {
+            $values = json_decode($values, true);
+        }
+
+        if (is_array($values)) {
+            if ($this->auditable_type === \App\Models\Product::class) {
+                return $values['product_name'] ?? null;
+            }
+            return $values['name'] ?? null;
+        }
+
+        return null;
     }
 }

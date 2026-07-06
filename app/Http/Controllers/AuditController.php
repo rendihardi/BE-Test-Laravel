@@ -20,7 +20,7 @@ class AuditController extends Controller
         ]);
 
         $query = Audit::query()
-            ->with('user')
+            ->with(['user', 'auditable'])
             ->where('auditable_type', $type);
 
         if ($request->filled('event')) {

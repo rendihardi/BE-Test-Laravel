@@ -45,13 +45,20 @@ class DashboardController extends Controller
     public function pieChart()
     {
         try {
+            $totalProducts = \App\Models\Product::count();
+
             $data = Category::withCount('products')
                 ->get()
-                ->map(function ($category) {
+                ->map(function ($category) use ($totalProducts) {
+                    $percentage = $totalProducts > 0
+                        ? round(($category->products_count / $totalProducts) * 100, 2)
+                        : 0;
+
                     return [
                         'category_id' => $category->id,
                         'category_name' => $category->name,
                         'product_count' => $category->products_count,
+                        'percentage' => $percentage,
                     ];
                 });
 
@@ -98,7 +105,7 @@ class DashboardController extends Controller
             $endDate = now()->endOfMonth();
 
             $transactions = StockTransaction::whereBetween('transaction_date', [$startDate, $endDate])
-                ->whereIn('type', ['IN', 'OUT'])
+                ->whereIn('type', ['IN', 'OUT', 'ADJUSTMTENT'])
                 ->selectRaw("DATE_FORMAT(transaction_date, '%Y-%m') as month, type, SUM(qty) as total_qty")
                 ->groupBy('month', 'type')
                 ->orderBy('month', 'asc')
@@ -113,6 +120,7 @@ class DashboardController extends Controller
                     'label' => $monthLabel,
                     'stock_in' => 0,
                     'stock_out' => 0,
+                    'adj' => 0,
                 ];
             }
 
@@ -122,6 +130,8 @@ class DashboardController extends Controller
                         $data[$tx->month]['stock_in'] = (int) $tx->total_qty;
                     } elseif ($tx->type === 'OUT') {
                         $data[$tx->month]['stock_out'] = (int) $tx->total_qty;
+                    } elseif ($tx->type === 'ADJUSTMTENT') {
+                        $data[$tx->month]['adj'] = (int) $tx->total_qty;
                     }
                 }
             }

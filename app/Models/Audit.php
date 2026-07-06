@@ -11,4 +11,9 @@ class Audit extends BaseAudit
 
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function auditable()
+    {
+        return $this->morphTo()->withTrashed();
+    }
 }
