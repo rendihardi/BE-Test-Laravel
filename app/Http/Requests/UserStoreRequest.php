@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserStoreRequest extends FormRequest
@@ -29,8 +30,7 @@ class UserStoreRequest extends FormRequest
             'roles.*' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    $exists = \DB::table('roles')
-                        ->where('id', $value)
+                    $exists = Role::where('id', $value)
                         ->orWhere('name', $value)
                         ->exists();
                     if (!$exists) {

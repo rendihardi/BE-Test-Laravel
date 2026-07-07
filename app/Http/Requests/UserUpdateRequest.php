@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,13 +21,13 @@ class UserUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         $userParam = $this->route('user');
-        $userId = $userParam instanceof \App\Models\User ? $userParam->uuid : $userParam;
-        
+        $userId = $userParam instanceof User ? $userParam->uuid : $userParam;
+
         return [
             'name' => 'sometimes|required|string|max:255',
             'email' => [
@@ -32,21 +35,20 @@ class UserUpdateRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users', 'email')->ignore($userId, 'uuid')
+                Rule::unique('users', 'email')->ignore($userId, 'uuid'),
             ],
             'password' => 'nullable|string|min:8',
             'roles' => 'nullable|array',
             'roles.*' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    $exists = \DB::table('roles')
-                        ->where('id', $value)
+                    $exists = Role::where('id', $value)
                         ->orWhere('name', $value)
                         ->exists();
-                    if (!$exists) {
+                    if (! $exists) {
                         $fail("The selected {$attribute} is invalid.");
                     }
-                }
+                },
             ],
         ];
     }
